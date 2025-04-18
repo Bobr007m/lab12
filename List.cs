@@ -97,7 +97,7 @@ namespace lab12
                 current = current.Next;
             }
 
-            public bool Remove(T item)
+            bool Remove(T item)
             {
                 if (begin.Data.Equals(item))
                 {
@@ -106,7 +106,7 @@ namespace lab12
                 }
                 else
                 {
-                    Point<T>? current = begin;
+                     current = begin;
                     while (current.Next != null && !current.Next.Data.Equals(item))
                     {
                         current = current.Next;
