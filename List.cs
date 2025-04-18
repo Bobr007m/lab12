@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace lab12
 {
-    class List<T>
+    class List<T> : ICloneable
     {
         public Point<T> begin; // начало списка
         public int Count // счетчик количества элементов
@@ -129,6 +129,20 @@ namespace lab12
                 current = current.Next;
                 count++;
             }
+        }
+        public object Clone()
+        {
+            List<T> newlist = new List<T>();
+            if (begin == null) return null;
+            newlist.begin = new Point<T>(begin.Data);
+            Point<T>? current = begin.Next;
+            while (current != null)
+            {
+                Point<T>? newPoint = new Point<T>(current.Data);
+                newlist.AddToEnd(newPoint);
+                current = current.Next;
+            }
+            return newlist;
         }
     }
 }
