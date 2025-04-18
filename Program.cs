@@ -1,5 +1,6 @@
 ﻿using System;
 using System.CodeDom;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -62,7 +63,11 @@ namespace lab12
             foreach (var figure in array) {
                 Console.WriteLine(figure + " ");
             }
-
+            Console.WriteLine("Clone");
+            List<CeometryFigure> list3 = (List<CeometryFigure>)ListOfCeometryFigure.Clone();
+            !!! list3.begin.Data = new GeometryFigure();
+            Console.WriteLine("List");
+            list3.PrintList();
 
 
         }
