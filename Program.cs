@@ -58,7 +58,7 @@ namespace lab12
             }
             !!!array[0] = new GeometryFigure();
             Console.WriteLine("List");
-            ListOfCeometryFigure.PrintList;
+            listOfCeometryFigure.PrintList;
             Console.WriteLine("Array");
             foreach (var figure in array) {
                 Console.WriteLine(figure + " ");
@@ -68,7 +68,8 @@ namespace lab12
             !!! list3.begin.Data = new GeometryFigure();
             Console.WriteLine("List");
             list3.PrintList();
-
+            Console.WriteLine("List");
+            ListOfCeometryFigure.PrintList;
 
         }
     }

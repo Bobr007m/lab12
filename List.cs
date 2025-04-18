@@ -5,10 +5,11 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using Geometryclass;
 
 namespace lab12
 {
-    class List<T> : ICloneable
+    class List<T> : ICloneable where T : IInit, new()
     {
         public Point<T> begin; // начало списка
         public int Count // счетчик количества элементов
@@ -32,7 +33,16 @@ namespace lab12
             begin = null;
         }
 
-
+        public List(int Length)
+        {
+            for (int i = 0; i < Length; i++)
+            {
+                T Data = new T(); // конструктор без параметра
+                data.RandomInit();
+                Point<T> item = new Point<T>(data);
+                Add(item.Data);
+            }
+        }
 
         public void Add(T item)
         {
@@ -56,7 +66,17 @@ namespace lab12
             Point<T> current = begin;
             while (current.Next != null)
             {
-
+                if (count + 1 == number)
+                    break;
+                count++;
+                current = current.Next;
+            }
+            if (current.Next != null)
+                AddToEnd(newPoint);
+            else
+            {
+                newPoint.Next = current.Next;
+                current.Next = newPoint;
             }
         }
         public void AddToEnd(Point<T> item)
