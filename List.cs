@@ -112,12 +112,14 @@ namespace lab12
             if (array.Length - arrayIndex < Count) throw new Exception("Список не помещается в массив");
             Point<T> current = begin;
             int i = arrayIndex;
-            while (current != null && i < array.Length) {
+            while (current != null && i < array.Length)
+            {
                 array[i++] = current.Data;
                 current = current.Next;
             }
+        }
 
-            bool Remove(T item)
+           public bool Remove(T item)
             {
                 if (begin.Data.Equals(item))
                 {
@@ -126,7 +128,7 @@ namespace lab12
                 }
                 else
                 {
-                     current = begin;
+                Point<T>  current = begin;
                     while (current.Next != null && !current.Next.Data.Equals(item))
                     {
                         current = current.Next;
@@ -139,7 +141,6 @@ namespace lab12
                     }
                 }
             }
-        }
         public void PrintList()
         {
             Point<T> current = begin;
@@ -164,8 +165,8 @@ namespace lab12
             }
             return newlist;
         }
-        // Добавление элемента после элемента с заданным информационным полем
-        public void AddAfter(T searchitem, T newitem)
+        // Добавление элемента после элемента с заданным именем фигуры
+        public void AddAfter(string figureName, T newItem)
         {
             if (begin == null)
             {
@@ -176,24 +177,25 @@ namespace lab12
             Point<T> current = begin;
             while (current != null)
             {
-                if (current.Data.CompareTo(searchitem) == 0)
+                if (current.Data.Name == figureName)
                 {
-                    Point<T> newPoint = new Point<T>(newitem);
+                    Point<T> newPoint = new Point<T>(newItem);
                     newPoint.Next = current.Next;
                     current.Next = newPoint;
                     return;
                 }
                 current = current.Next;
             }
-            Console.WriteLine($"Элемент {searchitem} не найден в списке");
+            Console.WriteLine($"Фигура с именем '{figureName}' не найдена");
         }
-        // Удаление всех элементов с заданным информационным полем
-        public void RemoveAll(T itemToRemove)
+
+        // Удаление всех элементов с заданным именем фигуры
+        public void RemoveAllByName(string figureName)
         {
             if (begin == null) return;
 
             // Удаление элементов в начале списка
-            while (begin != null && begin.Data.CompareTo(itemToRemove) == 0)
+            while (begin != null && begin.Data.Name == figureName)
             {
                 begin = begin.Next;
             }
@@ -203,7 +205,7 @@ namespace lab12
             Point<T> current = begin;
             while (current.Next != null)
             {
-                if (current.Next.Data.CompareTo(itemToRemove) == 0)
+                if (current.Next.Data.Name == figureName)
                 {
                     current.Next = current.Next.Next;
                 }
@@ -213,6 +215,7 @@ namespace lab12
                 }
             }
         }
+
 
     }
 }
