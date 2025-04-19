@@ -9,7 +9,7 @@ using Geometryclass;
 
 namespace lab12
 {
-    class List<T> : ICloneable where T : IInit, new()
+    class List<T> : ICloneable where T : IIni, new()
     {
         public Point<T> begin; // начало списка
         public int Count // счетчик количества элементов
@@ -38,8 +38,8 @@ namespace lab12
             for (int i = 0; i < Length; i++)
             {
                 T Data = new T(); // конструктор без параметра
-                data.RandomInit();
-                Point<T> item = new Point<T>(data);
+                Data.RandomInit();
+                Point<T> item = new Point<T>(Data);
                 Add(item.Data);
             }
         }
@@ -155,14 +155,64 @@ namespace lab12
             List<T> newlist = new List<T>();
             if (begin == null) return null;
             newlist.begin = new Point<T>(begin.Data);
-            Point<T>? current = begin.Next;
+            Point<T> current = begin.Next;
             while (current != null)
             {
-                Point<T>? newPoint = new Point<T>(current.Data);
+                Point<T> newPoint = new Point<T>(current.Data);
                 newlist.AddToEnd(newPoint);
                 current = current.Next;
             }
             return newlist;
         }
+        // Добавление элемента после элемента с заданным информационным полем
+        public void AddAfter(T searchitem, T newitem)
+        {
+            if (begin == null)
+            {
+                Console.WriteLine("Список пуст");
+                return;
+            }
+
+            Point<T> current = begin;
+            while (current != null)
+            {
+                if (current.Data.CompareTo(searchitem) == 0)
+                {
+                    Point<T> newPoint = new Point<T>(newitem);
+                    newPoint.Next = current.Next;
+                    current.Next = newPoint;
+                    return;
+                }
+                current = current.Next;
+            }
+            Console.WriteLine($"Элемент {searchitem} не найден в списке");
+        }
+        // Удаление всех элементов с заданным информационным полем
+        public void RemoveAll(T itemToRemove)
+        {
+            if (begin == null) return;
+
+            // Удаление элементов в начале списка
+            while (begin != null && begin.Data.CompareTo(itemToRemove) == 0)
+            {
+                begin = begin.Next;
+            }
+
+            if (begin == null) return;
+
+            Point<T> current = begin;
+            while (current.Next != null)
+            {
+                if (current.Next.Data.CompareTo(itemToRemove) == 0)
+                {
+                    current.Next = current.Next.Next;
+                }
+                else
+                {
+                    current = current.Next;
+                }
+            }
+        }
+
     }
 }

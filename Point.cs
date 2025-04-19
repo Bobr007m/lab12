@@ -8,8 +8,8 @@ namespace lab12
 {
      class Point <T>
     {
-        public T? Data { get; set; }
-        public Point <T>? Next { get; set; }
+        public T Data { get; set; }
+        public Point<T> Next { get; set; }
 
         public Point()
         {
