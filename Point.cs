@@ -3,7 +3,7 @@ using System;
 
 namespace lab12
 {
-    class Point<T> where T : Geometryfigure1, ICloneable, new()
+    public class Point<T> where T : Geometryfigure1, ICloneable, new()
     {
         public T Data { get; set; }
         public Point<T> Next { get; set; }
