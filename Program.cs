@@ -162,7 +162,7 @@ namespace lab12
 
         static void CloneList()
         {
-            var clonedList = figureList.DeepClone();
+            var clonedList = (List<Geometryfigure1>)figureList.Clone();
             Console.WriteLine("Список успешно клонирован.");
             Console.WriteLine("Содержимое клона:");
             clonedList.PrintList();
