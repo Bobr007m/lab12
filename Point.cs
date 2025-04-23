@@ -27,11 +27,11 @@ namespace lab12
         }
 
         // Метод для глубокого копирования 
-        public Point<T> DeepCopy()
+        public Point<T> DeepClone()
         {
             Point<T> newPoint = new Point<T>((T)Data.Clone());
-            newPoint.Next = Next != null ? Next.DeepCopy() : null;
-            newPoint.Prev = Prev != null ? Prev.DeepCopy() : null;
+            newPoint.Next = Next != null ? Next.DeepClone() : null;
+            newPoint.Prev = Prev != null ? Prev.DeepClone() : null;
             return newPoint;
         }
 
