@@ -9,10 +9,12 @@ using Geometryclass;
 
 namespace lab12
 {
-    class List<T> : ICloneable where T : Geometryfigure1, IIni, ICloneable, new()
+    public class List<T> : ICloneable where T : Geometryfigure1, IIni, ICloneable, new()
     {
         public Point<T> begin; // начало списка
         public int Count // счетчик количества элементов
+        public Point<T> end { get; private set; }
+       
         {
             get
             {
