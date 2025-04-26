@@ -6,13 +6,14 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Geometryclass;
+using lab12;
 
 namespace lab12
 {
-    public class List<T> : ICloneable where T : Geometryfigure1, IIni, ICloneable, new()
+    public class MyList<T> : ICloneable where T : Geometryfigure1, IIni, ICloneable, new()
     {
         public Point<T> begin; // начало списка
-        public int Count // счетчик количества элементов
+        public int Count; // счетчик количества элементов
         public Point<T> end { get; private set; }
        
         {

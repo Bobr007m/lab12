@@ -1,5 +1,6 @@
 ﻿using System;
 using Geometryclass;
+using lab12;
 
 namespace lab12
 {
