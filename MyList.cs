@@ -205,12 +205,7 @@ namespace lab12
             }
         }
 
-        internal object DeepClone()
-        {
-            throw new NotImplementedException();
-        }
-
-        internal void AddToEnd(Geometryfigure1 geometryfigure1)
+        internal void AddToEnd(Geometryfigure1 figure)
         {
             throw new NotImplementedException();
         }
