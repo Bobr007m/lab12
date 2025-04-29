@@ -15,28 +15,14 @@ namespace lab12
         public Point<T> begin; // начало списка
         public int Count; // счетчик количества элементов
         public Point<T> end { get; private set; }
-       
-        {
-            get
-            {
-                int count = 0;
-                if (begin == null) return 0;
-                Point<T> current = begin;
-                while (current != null)
-                {
-                    count++;
-                    current = current.Next;
-                }
-                return count;
-            }
-        }
-
-        public List()
+      
+    
+        public MyList()
         {
             begin = null;
         }
 
-        public List(int Length)
+        public MyList(int Length)
         {
             for (int i = 0; i < Length; i++)
             {
@@ -156,7 +142,7 @@ namespace lab12
         }
         public object Clone()
         {
-            List<T> newlist = new List<T>();
+            MyList<T> newlist = new MyList<T>();
             if (begin == null) return null;
             newlist.begin = new Point<T>(begin.Data);
             Point<T> current = begin.Next;

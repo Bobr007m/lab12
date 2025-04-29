@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Geometryclass;
 using lab12;
 
@@ -6,7 +7,7 @@ namespace lab12
 {
     public class Program
     {
-        static List<Geometryfigure1> figureList = new List<Geometryfigure1>();
+        static MyList<Geometryfigure1> figureList = new MyList<Geometryfigure1>();
         static Random rnd = new Random();
 
         static void Main(string[] args)
@@ -163,7 +164,7 @@ namespace lab12
 
         static void CloneList()
         {
-            var clonedList = (List<Geometryfigure1>)figureList.Clone();
+            var clonedList = (MyList<Geometryfigure1>)figureList.Clone();
             Console.WriteLine("Список успешно клонирован.");
             Console.WriteLine("Содержимое клона:");
             clonedList.PrintList();
