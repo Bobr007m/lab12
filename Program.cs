@@ -16,7 +16,7 @@ namespace lab12
             while (!exit)
             {
                 Console.Clear();
-                Console.WriteLine("=== Меню работы с двунаправленным списком фигур ===");
+                Console.WriteLine("Меню для работы с двунаправленным списком фигур ");
                 Console.WriteLine("1. Создать новый список со случайными фигурами");
                 Console.WriteLine("2. Добавить фигуру в конец списка");
                 Console.WriteLine("3. Добавить фигуру после указанной");
