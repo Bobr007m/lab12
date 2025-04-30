@@ -31,15 +31,17 @@ namespace lab12
                 Point<T> item = new Point<T>(Data);
                 Add(item.Data);
             }
+
         }
 
         public void Add(T item)
         {
-            Point<T> newPoint = new Point<T>(item);
+            var newPoint = new Point<T>(item);
             if (begin == null)
-                begin = new Point<T>();
+                begin = newPoint;
             else
                 AddToEnd(newPoint);
+            Count++;
         }
         public void Add(int number, T item)
         {
@@ -71,9 +73,10 @@ namespace lab12
         public void AddToEnd(Point<T> item)
         {
             Point<T> ptr = begin;
-            while (ptr.Next != null)
+            while (ptr.Next != null) 
                 ptr = ptr.Next;
             ptr.Next = item;
+            Count++;
         }
         public void AddToBegin(Point<T> item)
         {
