@@ -78,7 +78,7 @@ namespace lab12
             Console.Write("Введите количество фигур: ");
             if (int.TryParse(Console.ReadLine(), out int count) && count > 0)
             {
-                figureList.Clear();
+
                 for (int i = 0; i < count; i++)
                 {
                     figureList.AddToEnd(CreateRandomFigure());
@@ -234,12 +234,11 @@ namespace lab12
                     figure = new Parallelepiped1();
                     break;
                 default:
-                    figure = new Rectangle1();
-                    break;
+                    throw new InvalidOperationException("Неизвестный тип фигуры");
             }
 
             figure.RandomInit();
-            figure.Name = $"Фигура_{Guid.NewGuid().ToString().Substring(0, 4)}";
+            figure.Name = $"Фигура_{rnd.Next(1000, 9999)}";
             return figure;
         }
     }

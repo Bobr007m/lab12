@@ -81,7 +81,10 @@ namespace lab12
 
         public void AddToEnd(T item)
         {
-            Point<T> newPoint = new Point<T>(item);
+            if (item == null)
+                throw new ArgumentNullException(nameof(item));
+
+            var newPoint = new Point<T>(item);
 
             if (begin == null)
             {

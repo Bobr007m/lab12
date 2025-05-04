@@ -7,13 +7,13 @@ namespace lab12
     {
         public T Data { get; set; }
         public Point<T> Next { get; set; }
-        public Point<T> Prev { get; set; }  //  для двунаправленного списка
+        public Point<T> Prev { get; set; }
 
         // Конструктор по умолчанию
         public Point()
         {
-            Data = new T();  // новый объект типа T
-            Data.RandomInit();  
+            Data = new T();
+            Data.RandomInit();
             Next = null;
             Prev = null;
         }
@@ -22,12 +22,13 @@ namespace lab12
         public Point(T data)
         {
             if (data == null)
-                throw new ArgumentNullException(nameof(data), "Data cannot be null");
-            Data = data.Clone() as T;
+                throw new ArgumentNullException(nameof(data));
 
-            if (Data == null)
-                throw new InvalidCastException($"Failed to cast cloned object to type {typeof(T).Name}");
+            // Проверяем, что data - действительно Geometryfigure1
+            if (!(data is Geometryfigure1))
+                throw new ArgumentException("Данные должны быть типа Geometryfigure1");
 
+            Data = data;
             Next = null;
             Prev = null;
         }
@@ -35,16 +36,21 @@ namespace lab12
         // Метод для глубокого копирования 
         public Point<T> DeepClone()
         {
-            Point<T> newPoint = new Point<T>((T)Data.Clone());
-            newPoint.Next = Next != null ? Next.DeepClone() : null;
-            newPoint.Prev = Prev != null ? Prev.DeepClone() : null;
+            var newPoint = new Point<T>(Data);
+            
+            if (Next != null)
+            {
+                newPoint.Next = Next.DeepClone();
+                newPoint.Next.Prev = newPoint;
+            }
+            
             return newPoint;
         }
 
         // Метод для сравнения по имени фигуры
         public bool CompareByName(string name)
         {
-            return Data.Name.Equals(name, StringComparison.OrdinalIgnoreCase);
+            return Data?.Name?.Equals(name, StringComparison.OrdinalIgnoreCase) ?? false;
         }
 
         // Переопределение ToString()
@@ -62,7 +68,7 @@ namespace lab12
         // Метод для проверки соответствия критерию (по имени)
         public bool MatchesCriteria(string criteria)
         {
-            return Data != null && Data.Name.Contains(criteria);
+            return Data?.Name?.Contains(criteria) ?? false;
         }
     }
 }
