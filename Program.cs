@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿
+using System;
 using Geometryclass;
-using lab12;
 
 namespace lab12
 {
@@ -16,7 +15,7 @@ namespace lab12
             while (!exit)
             {
                 Console.Clear();
-                Console.WriteLine("Меню для работы с двунаправленным списком фигур ");
+                Console.WriteLine("Меню для работы с двунаправленным списком фигур");
                 Console.WriteLine("1. Создать новый список со случайными фигурами");
                 Console.WriteLine("2. Добавить фигуру в конец списка");
                 Console.WriteLine("3. Добавить фигуру после указанной");
@@ -27,35 +26,43 @@ namespace lab12
                 Console.WriteLine("8. Выход");
                 Console.Write("Выберите действие: ");
 
-                switch (Console.ReadLine())
+                var input = Console.ReadLine();
+                try
                 {
-                    case "1":
-                        CreateRandomList();
-                        break;
-                    case "2":
-                        AddFigureToEnd();
-                        break;
-                    case "3":
-                        AddFigureAfter();
-                        break;
-                    case "4":
-                        RemoveFiguresByName();
-                        break;
-                    case "5":
-                        PrintList();
-                        break;
-                    case "6":
-                        CloneList();
-                        break;
-                    case "7":
-                        ClearList();
-                        break;
-                    case "8":
-                        exit = true;
-                        break;
-                    default:
-                        Console.WriteLine("Неверный ввод!");
-                        break;
+                    switch (input)
+                    {
+                        case "1":
+                            CreateRandomList();
+                            break;
+                        case "2":
+                            AddFigureToEnd();
+                            break;
+                        case "3":
+                            AddFigureAfter();
+                            break;
+                        case "4":
+                            RemoveFiguresByName();
+                            break;
+                        case "5":
+                            PrintList();
+                            break;
+                        case "6":
+                            CloneList();
+                            break;
+                        case "7":
+                            ClearList();
+                            break;
+                        case "8":
+                            exit = true;
+                            break;
+                        default:
+                            Console.WriteLine("Неверный ввод!");
+                            break;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Ошибка: {ex.Message}");
                 }
 
                 if (!exit)
@@ -68,10 +75,10 @@ namespace lab12
 
         static void CreateRandomList()
         {
-            figureList.Clear();
             Console.Write("Введите количество фигур: ");
             if (int.TryParse(Console.ReadLine(), out int count) && count > 0)
             {
+                figureList.Clear();
                 for (int i = 0; i < count; i++)
                 {
                     figureList.AddToEnd(CreateRandomFigure());
@@ -80,7 +87,7 @@ namespace lab12
             }
             else
             {
-                Console.WriteLine("Некорректный ввод!");
+                Console.WriteLine("Некорректный ввод! Должно быть положительное число.");
             }
         }
 
@@ -93,7 +100,8 @@ namespace lab12
             Console.Write("Ваш выбор: ");
 
             Geometryfigure1 figure = null;
-            switch (Console.ReadLine())
+            var choice = Console.ReadLine();
+            switch (choice)
             {
                 case "1":
                     figure = new Rectangle1();
@@ -109,6 +117,7 @@ namespace lab12
                     return;
             }
 
+            figure.RandomInit();
             Console.Write("Введите название фигуры: ");
             figure.Name = Console.ReadLine();
             figureList.AddToEnd(figure);
@@ -117,6 +126,12 @@ namespace lab12
 
         static void AddFigureAfter()
         {
+            if (figureList.Count == 0)
+            {
+                Console.WriteLine("Список пуст!");
+                return;
+            }
+
             Console.Write("Введите название фигуры, после которой нужно добавить новую: ");
             string searchName = Console.ReadLine();
 
@@ -127,7 +142,8 @@ namespace lab12
             Console.Write("Ваш выбор: ");
 
             Geometryfigure1 newFigure = null;
-            switch (Console.ReadLine())
+            var choice = Console.ReadLine();
+            switch (choice)
             {
                 case "1":
                     newFigure = new Rectangle1();
@@ -143,6 +159,7 @@ namespace lab12
                     return;
             }
 
+            newFigure.RandomInit();
             Console.Write("Введите название новой фигуры: ");
             newFigure.Name = Console.ReadLine();
             figureList.AddAfter(searchName, newFigure);
@@ -158,16 +175,42 @@ namespace lab12
 
         static void PrintList()
         {
+            if (figureList.Count == 0)
+            {
+                Console.WriteLine("Список пуст!");
+                return;
+            }
+
             Console.WriteLine("Текущий список фигур:");
             figureList.PrintList();
         }
 
         static void CloneList()
         {
-            var clonedList = (MyList<Geometryfigure1>)figureList.Clone();
-            Console.WriteLine("Список успешно клонирован.");
-            Console.WriteLine("Содержимое клона:");
-            clonedList.PrintList();
+            if (figureList.Count == 0)
+            {
+                Console.WriteLine("Список пуст, нечего клонировать!");
+                return;
+            }
+
+            try
+            {
+                var clonedList = figureList.Clone() as MyList<Geometryfigure1>;
+                if (clonedList != null)
+                {
+                    Console.WriteLine("Список успешно клонирован.");
+                    Console.WriteLine("Содержимое клона:");
+                    clonedList.PrintList();
+                }
+                else
+                {
+                    Console.WriteLine("Ошибка при клонировании списка.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Ошибка при клонировании: {ex.Message}");
+            }
         }
 
         static void ClearList()
@@ -178,10 +221,8 @@ namespace lab12
 
         static Geometryfigure1 CreateRandomFigure()
         {
-            int type = rnd.Next(0, 3);
             Geometryfigure1 figure;
-
-            switch (type)
+            switch (rnd.Next(0, 3))
             {
                 case 0:
                     figure = new Rectangle1();
@@ -198,6 +239,7 @@ namespace lab12
             }
 
             figure.RandomInit();
+            figure.Name = $"Фигура_{Guid.NewGuid().ToString().Substring(0, 4)}";
             return figure;
         }
     }

@@ -21,7 +21,13 @@ namespace lab12
         // Конструктор с параметром
         public Point(T data)
         {
-            Data = (T)data.Clone();  // Глубокое копирование данных
+            if (data == null)
+                throw new ArgumentNullException(nameof(data), "Data cannot be null");
+            Data = data.Clone() as T;
+
+            if (Data == null)
+                throw new InvalidCastException($"Failed to cast cloned object to type {typeof(T).Name}");
+
             Next = null;
             Prev = null;
         }

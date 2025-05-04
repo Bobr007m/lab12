@@ -6,87 +6,120 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using Geometryclass;
-using lab12;
 
 namespace lab12
 {
     public class MyList<T> : ICloneable where T : Geometryfigure1, IIni, ICloneable, new()
     {
         public Point<T> begin; // начало списка
-        public int Count; // счетчик количества элементов
-        public Point<T> end { get; private set; }
-      
-    
+        public Point<T> end;    // конец списка
+        public int Count;       // счетчик количества элементов
+
         public MyList()
         {
             begin = null;
+            end = null;
+            Count = 0;
         }
 
         public MyList(int Length)
         {
+            begin = null;
+            end = null;
+            Count = 0;
+
             for (int i = 0; i < Length; i++)
             {
                 T Data = new T(); // конструктор без параметра
                 Data.RandomInit();
-                Point<T> item = new Point<T>(Data);
-                Add(item.Data);
+                AddToEnd(Data);
             }
-
         }
 
         public void Add(T item)
         {
-            var newPoint = new Point<T>(item);
-            if (begin == null)
-                begin = newPoint;
-            else
-                AddToEnd(newPoint);
-            Count++;
+            AddToEnd(item);
         }
+
         public void Add(int number, T item)
         {
-            Point<T> newPoint = new Point<T>(item);
             if (number > Count + 1)
                 throw new Exception("номер больше, чем количество элементов в списке");
-            if (number == 0) // в начало
+
+            if (number == 0 || begin == null) // в начало
             {
-                AddToBegin(newPoint);
+                AddToBegin(item);
                 return;
             }
+
+            if (number == Count) // в конец
+            {
+                AddToEnd(item);
+                return;
+            }
+
+            // Вставка в середину
             int count = 1;
             Point<T> current = begin;
-            while (current.Next != null)
+            while (current != null && count < number)
             {
-                if (count + 1 == number)
-                    break;
-                count++;
                 current = current.Next;
+                count++;
             }
-            if (current.Next != null)
-                AddToEnd(newPoint);
+
+            if (current != null)
+            {
+                Point<T> newPoint = new Point<T>(item);
+                newPoint.Next = current.Next;
+                newPoint.Prev = current;
+                if (current.Next != null)
+                    current.Next.Prev = newPoint;
+                current.Next = newPoint;
+                Count++;
+            }
+        }
+
+        public void AddToEnd(T item)
+        {
+            Point<T> newPoint = new Point<T>(item);
+
+            if (begin == null)
+            {
+                begin = newPoint;
+                end = newPoint;
+            }
             else
             {
-                newPoint.Next = current.Next;
-                current.Next = newPoint;
+                end.Next = newPoint;
+                newPoint.Prev = end;
+                end = newPoint;
             }
-        }
-        public void AddToEnd(Point<T> item)
-        {
-            Point<T> ptr = begin;
-            while (ptr.Next != null) 
-                ptr = ptr.Next;
-            ptr.Next = item;
             Count++;
         }
-        public void AddToBegin(Point<T> item)
+
+        public void AddToBegin(T item)
         {
-            item.Next = begin;
-            begin = item;
+            Point<T> newPoint = new Point<T>(item);
+
+            if (begin == null)
+            {
+                begin = newPoint;
+                end = newPoint;
+            }
+            else
+            {
+                newPoint.Next = begin;
+                begin.Prev = newPoint;
+                begin = newPoint;
+            }
+            Count++;
         }
 
         public void Clear()
         {
             begin = null;
+            end = null;
+            Count = 0;
         }
 
         public bool Contains(T item)
@@ -97,11 +130,12 @@ namespace lab12
             return current != null;
         }
 
-        public void CopyTo(T[] array, int arrayIndex) // копирует элементы из коллекции в массив, начиная с определенного индекса
+        public void CopyTo(T[] array, int arrayIndex)
         {
             if (array == null) throw new Exception("Массив не может быть null");
             if (arrayIndex < 0) throw new Exception("Индекс не может быть меньше 0");
             if (array.Length - arrayIndex < Count) throw new Exception("Список не помещается в массив");
+
             Point<T> current = begin;
             int i = arrayIndex;
             while (current != null && i < array.Length)
@@ -111,53 +145,88 @@ namespace lab12
             }
         }
 
-           public bool Remove(T item)
+        public bool Remove(T item)
+        {
+            if (begin == null) return false;
+
+            // Удаление первого элемента
+            if (begin.Data.Equals(item))
             {
-                if (begin.Data.Equals(item))
-                {
-                    begin = begin.Next;
-                    return true;
-                }
+                begin = begin.Next;
+                if (begin != null)
+                    begin.Prev = null;
                 else
-                {
-                Point<T>  current = begin;
-                    while (current.Next != null && !current.Next.Data.Equals(item))
-                    {
-                        current = current.Next;
-                    }
-                    if (current.Next == null)
-                        return false;
-                    else {
-                        current.Next = current.Next.Next;
-                        return true;
-                    }
-                }
+                    end = null;
+                Count--;
+                return true;
             }
+
+            // Удаление последнего элемента
+            if (end.Data.Equals(item))
+            {
+                end = end.Prev;
+                end.Next = null;
+                Count--;
+                return true;
+            }
+
+            // Удаление из середины
+            Point<T> current = begin.Next;
+            while (current != null && !current.Data.Equals(item))
+            {
+                current = current.Next;
+            }
+
+            if (current != null)
+            {
+                current.Prev.Next = current.Next;
+                if (current.Next != null)
+                    current.Next.Prev = current.Prev;
+                Count--;
+                return true;
+            }
+
+            return false;
+        }
+
         public void PrintList()
         {
             Point<T> current = begin;
             int count = 1;
-            while (current != null) {
+            while (current != null)
+            {
                 Console.WriteLine($"{count}: {current.Data}");
                 current = current.Next;
                 count++;
             }
         }
+
+        public void PrintListReverse()
+        {
+            Point<T> current = end;
+            int count = Count;
+            while (current != null)
+            {
+                Console.WriteLine($"{count}: {current.Data}");
+                current = current.Prev;
+                count--;
+            }
+        }
+
         public object Clone()
         {
             MyList<T> newlist = new MyList<T>();
-            if (begin == null) return null;
-            newlist.begin = new Point<T>(begin.Data);
-            Point<T> current = begin.Next;
+            if (begin == null) return newlist;
+
+            Point<T> current = begin;
             while (current != null)
             {
-                Point<T> newPoint = new Point<T>(current.Data);
-                newlist.AddToEnd(newPoint);
+                newlist.AddToEnd((T)current.Data.Clone());
                 current = current.Next;
             }
             return newlist;
         }
-        // Добавление элемента после элемента с заданным именем фигуры
+
         public void AddAfter(string figureName, T newItem)
         {
             if (begin == null)
@@ -173,7 +242,15 @@ namespace lab12
                 {
                     Point<T> newPoint = new Point<T>(newItem);
                     newPoint.Next = current.Next;
+                    newPoint.Prev = current;
+
+                    if (current.Next != null)
+                        current.Next.Prev = newPoint;
+                    else
+                        end = newPoint;
+
                     current.Next = newPoint;
+                    Count++;
                     return;
                 }
                 current = current.Next;
@@ -181,7 +258,6 @@ namespace lab12
             Console.WriteLine($"Фигура с именем '{figureName}' не найдена");
         }
 
-        // Удаление всех элементов с заданным именем фигуры
         public void RemoveAllByName(string figureName)
         {
             if (begin == null) return;
@@ -190,27 +266,30 @@ namespace lab12
             while (begin != null && begin.Data.Name == figureName)
             {
                 begin = begin.Next;
+                if (begin != null)
+                    begin.Prev = null;
+                else
+                    end = null;
+                Count--;
             }
 
             if (begin == null) return;
 
+            // Удаление элементов в середине и конце
             Point<T> current = begin;
-            while (current.Next != null)
+            while (current != null)
             {
-                if (current.Next.Data.Name == figureName)
+                if (current.Data.Name == figureName)
                 {
-                    current.Next = current.Next.Next;
+                    current.Prev.Next = current.Next;
+                    if (current.Next != null)
+                        current.Next.Prev = current.Prev;
+                    else
+                        end = current.Prev;
+                    Count--;
                 }
-                else
-                {
-                    current = current.Next;
-                }
+                current = current.Next;
             }
-        }
-
-        internal void AddToEnd(Geometryfigure1 figure)
-        {
-            throw new NotImplementedException();
         }
     }
 }
