@@ -9,24 +9,13 @@ namespace lab12
         public Point<T> Next { get; set; }
         public Point<T> Prev { get; set; }
 
-        // Конструктор по умолчанию
-        public Point()
-        {
-            Data = new T();
-            Data.RandomInit();
-            Next = null;
-            Prev = null;
-        }
-
-        // Конструктор с параметром
         public Point(T data)
         {
             if (data == null)
                 throw new ArgumentNullException(nameof(data));
 
-            // Проверяем, что data - действительно Geometryfigure1
             if (!(data is Geometryfigure1))
-                throw new ArgumentException("Данные должны быть типа Geometryfigure1");
+                throw new ArgumentException("Data должен быть типа Geometryfigure1");
 
             Data = data;
             Next = null;

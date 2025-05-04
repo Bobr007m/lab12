@@ -193,24 +193,35 @@ namespace lab12
                 return;
             }
 
-            try
+            var clonedList = new MyList<Geometryfigure1>();
+            var current = figureList.begin;
+
+            while (current != null)
             {
-                var clonedList = figureList.Clone() as MyList<Geometryfigure1>;
-                if (clonedList != null)
+                try
                 {
-                    Console.WriteLine("Список успешно клонирован.");
-                    Console.WriteLine("Содержимое клона:");
-                    clonedList.PrintList();
+                    var cloned = current.Data.Clone();
+                    if (cloned is Geometryfigure1 figure)
+                    {
+                        clonedList.AddToEnd(figure);
+                    }
+                    else
+                    {
+                        throw new Exception($"Некорректный тип при клонировании: {cloned?.GetType().Name}");
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    Console.WriteLine("Ошибка при клонировании списка.");
+                    Console.WriteLine($"Ошибка при клонировании элемента: {ex.Message}");
+                    Console.WriteLine($"Тип элемента: {current.Data.GetType().Name}");
+                    return;
                 }
+
+                current = current.Next;
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Ошибка при клонировании: {ex.Message}");
-            }
+
+            Console.WriteLine("Список успешно клонирован. Элементов: " + clonedList.Count);
+            clonedList.PrintList();
         }
 
         static void ClearList()

@@ -218,16 +218,27 @@ namespace lab12
 
         public object Clone()
         {
-            MyList<T> newlist = new MyList<T>();
-            if (begin == null) return newlist;
+            MyList<T> newList = new MyList<T>();
+            if (begin == null)
+                return newList;
 
             Point<T> current = begin;
+            Point<T> newPoint = new Point<T>((T)current.Data.Clone());
+            newList.begin = newPoint;
+            newList.end = newPoint;
+
+            current = current.Next;
             while (current != null)
             {
-                newlist.AddToEnd((T)current.Data.Clone());
+                Point<T> temp = new Point<T>((T)current.Data.Clone());
+                newList.end.Next = temp;
+                temp.Prev = newList.end;
+                newList.end = temp;
                 current = current.Next;
             }
-            return newlist;
+
+            newList.Count = this.Count;
+            return newList;
         }
 
         public void AddAfter(string figureName, T newItem)
