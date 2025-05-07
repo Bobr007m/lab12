@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lab12", "lab12.csproj", "{4FF63E97-31CE-4C37-ADC8-0F46795F512C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lab12.1", "lab12.1.csproj", "{4FF63E97-31CE-4C37-ADC8-0F46795F512C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Geometryclass", "..\Ceometryclass\Geometryclass.csproj", "{59AFB60B-F3D4-4891-BF54-AF8C6D5E2D1A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestProject", "..\TestProject\TestProject.csproj", "{3BCF1FDE-322D-4644-B6B0-43E146BB12B4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lab12.2", "..\lab12.2\lab12.2.csproj", "{537429CC-7679-44B2-8252-9808F7B27115}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{3BCF1FDE-322D-4644-B6B0-43E146BB12B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BCF1FDE-322D-4644-B6B0-43E146BB12B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BCF1FDE-322D-4644-B6B0-43E146BB12B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{537429CC-7679-44B2-8252-9808F7B27115}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{537429CC-7679-44B2-8252-9808F7B27115}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{537429CC-7679-44B2-8252-9808F7B27115}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{537429CC-7679-44B2-8252-9808F7B27115}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
