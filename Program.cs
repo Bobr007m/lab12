@@ -118,8 +118,6 @@ namespace lab12
             }
 
             figure.RandomInit();
-            Console.Write("Введите название фигуры: ");
-            figure.Name = Console.ReadLine();
             figureList.AddToEnd(figure);
             Console.WriteLine("Фигура добавлена в конец списка.");
         }
@@ -133,7 +131,13 @@ namespace lab12
             }
 
             Console.Write("Введите название фигуры, после которой нужно добавить новую: ");
-            string searchName = Console.ReadLine();
+            string searchName = Console.ReadLine().Trim();
+
+            if (string.IsNullOrWhiteSpace(searchName))
+            {
+                Console.WriteLine("Имя не может быть пустым!");
+                return;
+            }
 
             Console.WriteLine("Выберите тип новой фигуры:");
             Console.WriteLine("1. Прямоугольник");
@@ -160,19 +164,24 @@ namespace lab12
             }
 
             newFigure.RandomInit();
-            Console.Write("Введите название новой фигуры: ");
-            newFigure.Name = Console.ReadLine();
+
             figureList.AddAfter(searchName, newFigure);
         }
 
         static void RemoveFiguresByName()
         {
             Console.Write("Введите название фигур для удаления: ");
-            string name = Console.ReadLine();
+            string name = Console.ReadLine().Trim();
+
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                Console.WriteLine("Имя не может быть пустым!");
+                return;
+            }
+
             figureList.RemoveAllByName(name);
             Console.WriteLine($"Фигуры с именем '{name}' удалены.");
         }
-
         static void PrintList()
         {
             if (figureList.Count == 0)

@@ -249,10 +249,29 @@ namespace lab12
                 return;
             }
 
+            if (newItem == null)
+            {
+                Console.WriteLine("Нельзя добавить null-элемент");
+                return;
+            }
+
+            // Нормализация введённого имени
+            figureName = figureName?.Trim();
+
+            if (string.IsNullOrEmpty(figureName))
+            {
+                Console.WriteLine("Имя для поиска не может быть пустым");
+                return;
+            }
+
             Point<T> current = begin;
+            bool found = false;
+
             while (current != null)
             {
-                if (current.Data.Name == figureName)
+                // Нормализация имени из списка и сравнение без учёта регистра
+                var currentName = current.Data.Name?.Trim();
+                if (string.Equals(currentName, figureName, StringComparison.OrdinalIgnoreCase))
                 {
                     Point<T> newPoint = new Point<T>(newItem);
                     newPoint.Next = current.Next;
@@ -265,19 +284,37 @@ namespace lab12
 
                     current.Next = newPoint;
                     Count++;
-                    return;
+                    found = true;
                 }
                 current = current.Next;
             }
-            Console.WriteLine($"Фигура с именем '{figureName}' не найдена");
+
+            if (!found)
+            {
+                Console.WriteLine($"Фигура с именем '{figureName}' не найдена");
+            }
         }
 
         public void RemoveAllByName(string figureName)
         {
-            if (begin == null) return;
+            if (begin == null)
+            {
+                Console.WriteLine("Список пуст");
+                return;
+            }
+
+            // Нормализация введённого имени
+            figureName = figureName?.Trim();
+
+            if (string.IsNullOrEmpty(figureName))
+            {
+                Console.WriteLine("Имя для удаления не может быть пустым");
+                return;
+            }
 
             // Удаление элементов в начале списка
-            while (begin != null && begin.Data.Name == figureName)
+            while (begin != null &&
+                   string.Equals(begin.Data.Name?.Trim(), figureName, StringComparison.OrdinalIgnoreCase))
             {
                 begin = begin.Next;
                 if (begin != null)
@@ -293,13 +330,17 @@ namespace lab12
             Point<T> current = begin;
             while (current != null)
             {
-                if (current.Data.Name == figureName)
+                var currentName = current.Data.Name?.Trim();
+                if (string.Equals(currentName, figureName, StringComparison.OrdinalIgnoreCase))
                 {
-                    current.Prev.Next = current.Next;
+                    if (current.Prev != null)
+                        current.Prev.Next = current.Next;
+
                     if (current.Next != null)
                         current.Next.Prev = current.Prev;
                     else
                         end = current.Prev;
+
                     Count--;
                 }
                 current = current.Next;
