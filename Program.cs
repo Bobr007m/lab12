@@ -194,6 +194,7 @@ namespace lab12
             figureList.PrintList();
         }
 
+
         static void CloneList()
         {
             if (figureList.Count == 0)

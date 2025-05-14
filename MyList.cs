@@ -192,13 +192,15 @@ namespace lab12
             return false;
         }
 
+        
         public void PrintList()
         {
             Point<T> current = begin;
             int count = 1;
             while (current != null)
             {
-                Console.WriteLine($"{count}: {current.Data}");
+                var figure = current.Data;
+                Console.WriteLine($"{count}: {figure?.Name ?? "[Без имени]"} ({figure?.GetType().Name ?? "Неизвестный тип"})");
                 current = current.Next;
                 count++;
             }
