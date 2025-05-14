@@ -70,11 +70,11 @@ namespace lab12
             if (current != null)
             {
                 Point<T> newPoint = new Point<T>(item);
-                newPoint.Next = current.Next;
-                newPoint.Prev = current;
+                newPoint.Next = current.Next;// Новый узел указывает на следующий за current
+                newPoint.Prev = current;       // Новый узел ссылается назад на current
                 if (current.Next != null)
-                    current.Next.Prev = newPoint;
-                current.Next = newPoint;
+                    current.Next.Prev = newPoint;// Бывший следующий узел теперь ссылается на newPoint
+                current.Next = newPoint;           // Теперь current.Next — это newPoint
                 Count++;
             }
         }
@@ -201,18 +201,6 @@ namespace lab12
                 Console.WriteLine($"{count}: {current.Data}");
                 current = current.Next;
                 count++;
-            }
-        }
-
-        public void PrintListReverse()
-        {
-            Point<T> current = end;
-            int count = Count;
-            while (current != null)
-            {
-                Console.WriteLine($"{count}: {current.Data}");
-                current = current.Prev;
-                count--;
             }
         }
 
