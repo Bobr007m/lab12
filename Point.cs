@@ -40,10 +40,6 @@ namespace lab12
             Data?.Show();
         }
 
-        // Метод для проверки соответствия критерию (по имени)
-        public bool MatchesCriteria(string criteria)
-        {
-            return Data?.Name?.Contains(criteria) ?? false;
-        }
+       
     }
 }
