@@ -22,20 +22,6 @@ namespace lab12
             Prev = null;
         }
 
-        // Метод для глубокого копирования 
-        public Point<T> DeepClone()
-        {
-            var newPoint = new Point<T>(Data);
-            
-            if (Next != null)
-            {
-                newPoint.Next = Next.DeepClone();
-                newPoint.Next.Prev = newPoint;
-            }
-            
-            return newPoint;
-        }
-
         // Метод для сравнения по имени фигуры
         public bool CompareByName(string name)
         {
