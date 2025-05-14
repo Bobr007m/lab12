@@ -35,50 +35,6 @@ namespace lab12
                 AddToEnd(Data);
             }
         }
-
-        public void Add(T item)
-        {
-            AddToEnd(item);
-        }
-
-        public void Add(int number, T item)
-        {
-            if (number > Count + 1)
-                throw new Exception("номер больше, чем количество элементов в списке");
-
-            if (number == 0 || begin == null) // в начало
-            {
-                AddToBegin(item);
-                return;
-            }
-
-            if (number == Count) // в конец
-            {
-                AddToEnd(item);
-                return;
-            }
-
-            // Вставка в середину
-            int count = 1;
-            Point<T> current = begin;
-            while (current != null && count < number)
-            {
-                current = current.Next;
-                count++;
-            }
-
-            if (current != null)
-            {
-                Point<T> newPoint = new Point<T>(item);
-                newPoint.Next = current.Next;// Новый узел указывает на следующий за current
-                newPoint.Prev = current;       // Новый узел ссылается назад на current
-                if (current.Next != null)
-                    current.Next.Prev = newPoint;// Бывший следующий узел теперь ссылается на newPoint
-                current.Next = newPoint;           // Теперь current.Next — это newPoint
-                Count++;
-            }
-        }
-
         public void AddToEnd(T item)
         {
             if (item == null)
@@ -146,53 +102,7 @@ namespace lab12
                 array[i++] = current.Data;
                 current = current.Next;
             }
-        }
-
-        public bool Remove(T item)
-        {
-            if (begin == null) return false;
-
-            // Удаление первого элемента
-            if (begin.Data.Equals(item))
-            {
-                begin = begin.Next;
-                if (begin != null)
-                    begin.Prev = null;
-                else
-                    end = null;
-                Count--;
-                return true;
-            }
-
-            // Удаление последнего элемента
-            if (end.Data.Equals(item))
-            {
-                end = end.Prev;
-                end.Next = null;
-                Count--;
-                return true;
-            }
-
-            // Удаление из середины
-            Point<T> current = begin.Next;
-            while (current != null && !current.Data.Equals(item))
-            {
-                current = current.Next;
-            }
-
-            if (current != null)
-            {
-                current.Prev.Next = current.Next;
-                if (current.Next != null)
-                    current.Next.Prev = current.Prev;
-                Count--;
-                return true;
-            }
-
-            return false;
-        }
-
-        
+        }        
         public void PrintList()
         {
             Point<T> current = begin;
