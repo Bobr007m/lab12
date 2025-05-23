@@ -76,6 +76,15 @@ namespace lab12
 
         public void Clear()
         {
+            Point<T> current = begin;
+            while (current != null)
+            {
+                Point<T> next = current.Next;
+                current.Prev = null;
+                current.Next = null;
+                current = next;
+            }
+
             begin = null;
             end = null;
             Count = 0;
