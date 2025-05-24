@@ -9,7 +9,7 @@ using Geometryclass;
 
 namespace lab12
 {
-    public class MyList<T> : ICloneable where T : Geometryfigure1, IIni, ICloneable, new()
+    public class MyList<T>  where T : Geometryfigure1, IIni, ICloneable, new()
     {
         public Point<T> begin; // начало списка
         public Point<T> end;    // конец списка
@@ -97,21 +97,6 @@ namespace lab12
                 current = current.Next;
             return current != null;
         }
-
-        public void CopyTo(T[] array, int arrayIndex)
-        {
-            if (array == null) throw new Exception("Массив не может быть null");
-            if (arrayIndex < 0) throw new Exception("Индекс не может быть меньше 0");
-            if (array.Length - arrayIndex < Count) throw new Exception("Список не помещается в массив");
-
-            Point<T> current = begin;
-            int i = arrayIndex;
-            while (current != null && i < array.Length)
-            {
-                array[i++] = current.Data;
-                current = current.Next;
-            }
-        }        
         public void PrintList()
         {
             Point<T> current = begin;
@@ -154,14 +139,12 @@ namespace lab12
         {
             if (begin == null)
             {
-                Console.WriteLine("Список пуст");
-                return;
+                throw new Exception("Список пуст");
             }
 
             if (newItem == null)
             {
-                Console.WriteLine("Нельзя добавить null-элемент");
-                return;
+                throw new Exception("Нельзя добавить null-элемент");
             }
 
             // Нормализация введённого имени
@@ -169,8 +152,7 @@ namespace lab12
 
             if (string.IsNullOrEmpty(figureName))
             {
-                Console.WriteLine("Имя для поиска не может быть пустым");
-                return;
+                throw new Exception("Имя для поиска не может быть пустым");
             }
 
             Point<T> current = begin;
@@ -200,7 +182,7 @@ namespace lab12
 
             if (!found)
             {
-                Console.WriteLine($"Фигура с именем '{figureName}' не найдена");
+                throw new Exception($"Фигура с именем '{figureName}' не найдена"); 
             }
         }
 
@@ -208,8 +190,7 @@ namespace lab12
         {
             if (begin == null)
             {
-                Console.WriteLine("Список пуст");
-                return;
+                throw new Exception("Список пуст");
             }
 
             // Нормализация введённого имени
@@ -217,8 +198,7 @@ namespace lab12
 
             if (string.IsNullOrEmpty(figureName))
             {
-                Console.WriteLine("Имя для удаления не может быть пустым");
-                return;
+                throw new Exception("Имя для удаления не может быть пустым");
             }
 
             // Удаление элементов в начале списка

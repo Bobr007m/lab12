@@ -26,6 +26,7 @@ namespace lab12
         public bool CompareByName(string name)
         {
             return Data?.Name?.Equals(name, StringComparison.OrdinalIgnoreCase) ?? false;
+            // возвращает левый операнд , если он не null , иначе — правый операнд
         }
 
         // Переопределение ToString()
