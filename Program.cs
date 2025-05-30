@@ -6,7 +6,7 @@ namespace lab12
 {
     public class Program
     {
-        static MyList<Geometryfigure1> figureList = new MyList<Geometryfigure1>();
+        public static MyList<Geometryfigure1> figureList = new MyList<Geometryfigure1>();
         static Random rnd = new Random();
 
         static void Main(string[] args)
@@ -73,7 +73,7 @@ namespace lab12
             }
         }
 
-        static void CreateRandomList()
+        public static void CreateRandomList()
         {
             Console.Write("Введите количество фигур: ");
             if (int.TryParse(Console.ReadLine(), out int count) && count > 0)
@@ -240,7 +240,7 @@ namespace lab12
             Console.WriteLine("Список очищен и удален из памяти.");
         }
 
-        static Geometryfigure1 CreateRandomFigure()
+        public static Geometryfigure1 CreateRandomFigure()
         {
             Geometryfigure1 figure;
             switch (rnd.Next(0, 3))
